@@ -108,10 +108,11 @@ public String concordantie(String input){
         for (String w : words) {
             map.put(filterWords(w), new LinkedList<>());
         }
-
+        
         for (String key : map.keySet()) {
             List<Integer> list = new LinkedList<>();
             int ruleNumber = 1;
+            
             for (String rule : rules) {
                 if (rule.toLowerCase().contains(key)) {
                     list.add(ruleNumber);
@@ -125,8 +126,6 @@ public String concordantie(String input){
         
     return output;
 }
-
-
     //maakt alle letters klein en vervangt é -> e + alle niet letters worden vervangen door niks
     public String filterWords(String word) {
         return word.toLowerCase().replaceAll("é", "e").replaceAll("\\W", "");

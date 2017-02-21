@@ -177,7 +177,7 @@ public class WordSortTest {
     
     @Test
     public void performanceTestConcordantie(){
-    String input = generateRandomWords(1000000);
+    String input = generateRandomWords(100000);
     WordSort instance = new WordSort();
     TimeStamp t =  new TimeStamp();
     t.setBegin();

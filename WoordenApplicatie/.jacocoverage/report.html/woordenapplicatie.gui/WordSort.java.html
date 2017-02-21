@@ -116,25 +116,29 @@ public String concordantie(String input){
 <span class="pc bpc" id="L116" title="1 of 2 branches missed.">                if (rule.toLowerCase().contains(key)) {</span>
 <span class="fc" id="L117">                    list.add(ruleNumber);</span>
                 }
-<span class="fc" id="L119">                ruleNumber++;</span>
+                else{
+<span class="nc" id="L120">                ruleNumber++;</span>
+                }
+                
+<span class="fc" id="L123">                ruleNumber++;</span>
             }
-<span class="fc" id="L121">            map.put(key, list);</span>
-<span class="fc" id="L122">        }</span>
+<span class="fc" id="L125">            map.put(key, list);</span>
+<span class="fc" id="L126">        }</span>
         
-<span class="fc" id="L124">     output = map.toString().replaceAll(&quot;, (?!\\d)&quot;, &quot;\n&quot;).replace(&quot;{&quot;, &quot;&quot;).replace(&quot;}&quot;, &quot;&quot;);</span>
+<span class="fc" id="L128">     output = map.toString().replaceAll(&quot;, (?!\\d)&quot;, &quot;\n&quot;).replace(&quot;{&quot;, &quot;&quot;).replace(&quot;}&quot;, &quot;&quot;);</span>
         
-<span class="fc" id="L126">    return output;</span>
+<span class="fc" id="L130">    return output;</span>
 }
 
 
     //maakt alle letters klein en vervangt é -&gt; e + alle niet letters worden vervangen door niks
     public String filterWords(String word) {
-<span class="fc" id="L132">        return word.toLowerCase().replaceAll(&quot;é&quot;, &quot;e&quot;).replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
+<span class="fc" id="L136">        return word.toLowerCase().replaceAll(&quot;é&quot;, &quot;e&quot;).replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
     }
 
     // \\s split op whitespaces + \\n split op nieuwe regel
     public String[] splitString(String string) {
-<span class="fc" id="L137">        return string.split(&quot;\\s+|\\n&quot;);</span>
+<span class="fc" id="L141">        return string.split(&quot;\\s+|\\n&quot;);</span>
     }
     
 }
