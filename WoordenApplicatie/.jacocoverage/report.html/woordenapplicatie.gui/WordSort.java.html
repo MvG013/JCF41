@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>WordSort.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;WoordenApplicatie&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">woordenapplicatie.gui</a> &gt; <span class="el_source">WordSort.java</span></div><h1>WordSort.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package woordenapplicatie.gui;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ *
+ * @author Marc
+ */
+<span class="fc" id="L22">public class WordSort {</span>
+    
+
+//    Aantal
+//Het tellen van het aantal verschillende woorden en het totaal aantal woorden in de tekst. 
+public String aantal(String input)
+{
+<span class="fc" id="L29">        String output = &quot;&quot;;</span>
+<span class="fc" id="L30">        String[] words = splitString(input);</span>
+<span class="fc" id="L31">        int wordCount = words.length;</span>
+
+<span class="fc" id="L33">        output += &quot;Aantal woorden: &quot; + String.valueOf(wordCount) + &quot;\n&quot;;</span>
+
+<span class="fc" id="L35">        Set&lt;String&gt; uniqueWords = new HashSet&lt;&gt;();</span>
+
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        for (String w : words) {</span>
+<span class="fc" id="L38">            uniqueWords.add(filterWords(w));</span>
+        }
+
+<span class="fc" id="L41">        output += &quot;Aantal Unieke woorden: &quot; + String.valueOf(uniqueWords.size());</span>
+        
+<span class="fc" id="L43">        return output;</span>
+}
+
+//Sorteer
+//Laat in “omgekeerde” alfabetische ordening alle verschillende woorden zien. 
+public String sorteer(String input){
+<span class="fc" id="L49">        String output = &quot;&quot;;</span>
+<span class="fc" id="L50">        String[] words = splitString(input);</span>
+
+<span class="fc" id="L52">        Set&lt;String&gt; uniqueWords = new TreeSet&lt;String&gt;().descendingSet();</span>
+        
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (String w : words) {</span>
+<span class="fc" id="L55">            uniqueWords.add(filterWords(w));</span>
+        }
+        
+<span class="fc" id="L58">        return uniqueWords.toString().replace(&quot;[&quot;, &quot;&quot;).replace(&quot;]&quot;, &quot;&quot;);</span>
+}
+
+//Frequentie
+//Het bijhouden hoeveel keer een woord voorkomt in de tekst gesorteren op frequentie.
+public String frequentie(String input){
+<span class="fc" id="L64">        String[] words = splitString(input);</span>
+<span class="fc" id="L65">        String output = &quot;&quot;;</span>
+
+<span class="fc" id="L67">        List&lt;String&gt; uniqWords = new LinkedList&lt;&gt;();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (String w : words) {</span>
+<span class="fc" id="L69">            uniqWords.add(filterWords(w));</span>
+        }
+
+<span class="fc" id="L72">        Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</span>
+        
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (String w : uniqWords) {</span>
+<span class="fc" id="L75">            Integer n = map.get(w);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (n == null) {</span>
+<span class="fc" id="L77">                map.put(w, 1);</span>
+            } else {
+<span class="fc" id="L79">                map.put(w, n + 1);</span>
+            }
+<span class="fc" id="L81">        }</span>
+        
+<span class="fc" id="L83">        List&lt;Map.Entry&lt;String, Integer&gt;&gt; gesorteerdeLijst = new LinkedList&lt;&gt;(map.entrySet());</span>
+        
+<span class="fc" id="L85">        Collections.sort(gesorteerdeLijst, new Comparator&lt;Map.Entry&lt;String, Integer&gt;&gt;()</span>
+<span class="fc" id="L86">        {</span>
+            @Override
+            public int compare(Map.Entry&lt;String, Integer&gt; o1,
+                               Map.Entry&lt;String, Integer&gt; o2)
+            {
+<span class="fc" id="L91">                return o1.getValue().compareTo(o2.getValue());</span>
+            }
+        });
+        
+        
+<span class="fc" id="L96">    return gesorteerdeLijst.toString().replace(&quot;, &quot;, &quot;\n&quot;).replace(&quot;[&quot;, &quot;&quot;).replace(&quot;]&quot;, &quot;&quot;);</span>
+}
+
+//Concordantie
+//Een concordantie voor de gegeven tekst is een lijst van alle woorden die in een tekst voorkomen, 
+//met de verwijzing naar de plaats waar ze staan. 
+public String concordantie(String input){
+<span class="fc" id="L103">        String[] rules = input.split(&quot;\n&quot;);</span>
+<span class="fc" id="L104">        String[] words = splitString(input);</span>
+<span class="fc" id="L105">        String output = &quot;&quot;;</span>
+
+<span class="fc" id="L107">        Map&lt;String, List&lt;Integer&gt;&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (String w : words) {</span>
+<span class="fc" id="L109">            map.put(filterWords(w), new LinkedList&lt;&gt;());</span>
+        }
+
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        for (String key : map.keySet()) {</span>
+<span class="fc" id="L113">            List&lt;Integer&gt; list = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L114">            int ruleNumber = 1;</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            for (String rule : rules) {</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">                if (rule.toLowerCase().contains(key)) {</span>
+<span class="fc" id="L117">                    list.add(ruleNumber);</span>
+                }
+<span class="fc" id="L119">                ruleNumber++;</span>
+            }
+<span class="fc" id="L121">            map.put(key, list);</span>
+<span class="fc" id="L122">        }</span>
+        
+<span class="fc" id="L124">     output = map.toString().replaceAll(&quot;, (?!\\d)&quot;, &quot;\n&quot;).replace(&quot;{&quot;, &quot;&quot;).replace(&quot;}&quot;, &quot;&quot;);</span>
+        
+<span class="fc" id="L126">    return output;</span>
+}
+
+
+    //maakt alle letters klein en vervangt é -&gt; e + alle niet letters worden vervangen door niks
+    public String filterWords(String word) {
+<span class="fc" id="L132">        return word.toLowerCase().replaceAll(&quot;é&quot;, &quot;e&quot;).replaceAll(&quot;\\W&quot;, &quot;&quot;);</span>
+    }
+
+    // \\s split op whitespaces + \\n split op nieuwe regel
+    public String[] splitString(String string) {
+<span class="fc" id="L137">        return string.split(&quot;\\s+|\\n&quot;);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
